@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage,amsthm,amsfonts,amssymb,epsfig,amsmath,times,amsthm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=cyan,
+}
+\urlstyle{same}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{claim}[theorem]{Claim}
+
+\renewcommand{\blacksquare}{\textcolor{blue}{\openbox}}
+
+\begin{document}
+
+\textcolor{blue}{\hfill Abraham Cardenas} 
+
+
+\begin{center}
+{\bf\Large CMPS 102 --- Winter 2019 --  Homework 3}
+\end{center}
+
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+
+\begin{itemize}
+
+\item[$1.$] (9 pts)
+
+a.
+
+\textcolor{blue}{ 
+\underline{Proof by contradiction}:\\
+Suppose we had the minimum spanning tree $T$ with the set of edge weights $w_1, w_2,$ .... $w_n$.  Suppose $T$ was not a minimum-altitude connected subgraph. There should be a pair of nodes $u$ and $v$, and two $u$ to $v$ paths $P_1 \neq P_2$, such that $P_1$ is the path from $u$ to $v$ but $P_2$ has the smaller altitude. Then, there exists some edge $e = (u',v')$ on $P_1$ that contains the maximum altitude over all edges in $P_1$ and $P_2$.\\ 
+Now, let's consider the set of edges in $P_1$ and $P_2$ except $e$, and suppose we took the following path from $u'$-$v'$:
+\begin{enumerate}
+  \item $P_1$ from $u'$ to $u$
+  \item $P_2$ from $u$ to $v$
+  \item $P_1$ from $v$ to $v'$
+\end{enumerate}
+It's possible that this path from $u'$-$v'$ contains a cycle so then, the set of edges in $P_1$ and $P_2$ except $e$ must contain some simple path $S$. And because $e$ is the maximum altitude in $T$, this would imply that the edges in $S$ and $e$ would also form a cycle. This contradicts the Cycle Property which says that ``for any cycle C in the graph, if the weight of an edge e of C is larger than the individual weights of all other edges of C, then this edge cannot belong to an MST''. Therefore, we can conclude that $T$ must be a minimum-altitude connected subgraph.\hspace{7.5cm}\blacksquare
+}
+
+
+\item[$2.$] (6 pts)\\
+a.\\
+\textcolor{blue}{ 
+If we choose $\omega = 3$, then we have $$\Rightarrow \big\{ \omega^0, \omega^1, \omega^2, \omega^3, \omega^4, \omega^5  \big\} = \big\{ 3^0,  3^1, 3^2, 3^3, 3^4, 3^5  \big\}$$ $$\Rightarrow \big\{ 1, 3, 9, 27, 81, 243  \big\}$$ In mod 7 we have, $$= \big\{ 1, 3, 2, 6, 4, 5  \big\}$$
+}
+b.\\
+\textcolor{blue}{ 
+ \[
+   F=
+  \left[ {\begin{array}{cccccc}
+   1 & 1 & 1 & 1 & 1 & 1\\
+   1 & 3 & 2 & 6 & 4 & 5\\
+   1 & 2 & 4 & 1 & 2 & 4\\
+   1 & 6 & 1 & 6 & 1 & 6\\
+   1 & 4 & 2 & 1 & 4 & 2\\
+   1 & 5 & 4 & 6 & 2 & 3\\
+  \end{array} } \right]
+\]
+}
+c.\\
+\textcolor{blue}{ 
+$$\textbf{y} = F \cdot \textbf{a}$$
+ \[
+   \Rightarrow \hspace{1.5cm} \textbf{y} =
+  \left[ {\begin{array}{cccccc}
+   1 & 1 & 1 & 1 & 1 & 1\\
+   1 & 3 & 2 & 6 & 4 & 5\\
+   1 & 2 & 4 & 1 & 2 & 4\\
+   1 & 6 & 1 & 6 & 1 & 6\\
+   1 & 4 & 2 & 1 & 4 & 2\\
+   1 & 5 & 4 & 6 & 2 & 3\\
+  \end{array} } \right]
+  \cdot 
+    \left[ {\begin{array}{c}
+   0\\
+   1\\
+   2\\
+   1\\
+   5\\
+   2\\
+  \end{array} } \right]
+   	= 
+	\left[ {\begin{array}{c}
+  	 11\\
+ 	  43\\
+  	 29\\
+  	 31\\
+  	 33\\
+  	 35\\
+  \end{array} } \right]
+    \]
+In mod 7 we have, 
+   \[
+	\textbf{y} =
+      \left[ {\begin{array}{c}
+   4\\
+   1\\
+   1\\
+   3\\
+   5\\
+   0\\
+  \end{array} } \right]
+\]
+}
+d.\\
+\phantom{d.} i.
+\textcolor{blue}{ 
+ \[
+   G_n = \frac{1}{6} \cdot
+  \left[ {\begin{array}{cccccc}
+   1 & 1 & 1 & 1 & 1 & 1\\
+   1 & 3^{-1} & 3^{-2} & 3^{-3} & 3^{-4} & 3^{-5}\\
+   1 & 3^{-2} & 3^{-4} & 3^{-6} & 3^{-8} & 3^{-10}\\
+   1 & 3^{-3} & 3^{-6} & 3^{-9} & 3^{-12} & 3^{-15}\\
+   1 & 3^{-4} & 3^{-8} & 3^{-12} & 3^{-16} & 3^{-20}\\
+   1 & 3^{-5} & 3^{-10} & 3^{-15} & 3^{-20} & 3^{-25}\\
+  \end{array} } \right]
+\]
+ \[
+  = \frac{1}{6} \cdot
+   \left[ {\begin{array}{cccccc}
+   1 & 1 & 1 & 1 & 1 & 1\\
+   1 & 3^{-1} & 2^{-1} & 6^{-1} & 4^{-1} & 5^{-1}\\
+   1 & 2^{-1} & 4^{-1} & 1^{-1} & 2^{-1} & 4^{-1}\\
+   1 & 6^{-1} & 1^{-1} & 6^{-1} & 1^{-1} & 6^{-1}\\
+   1 & 4^{-1} & 2^{-1} & 1^{-1} & 4^{-1} & 2^{-1}\\
+   1 & 5^{-1} & 4^{-1} & 6^{-1} & 2^{-1} & 3^{-1}\\
+  \end{array} } \right]
+  \]
+In mod 7 we have,
+$$1^{-1} = 1, 2^{-1} = 4, 3^{-1} = 5, 4^{-1} = 2, 5^{-1} = 3, 6^{-1} = 6$$
+  \[
+ 	\Rightarrow 6 \cdot
+ \left[ {\begin{array}{cccccc}
+   1 & 1 & 1 & 1 & 1 & 1\\
+   1 & 5 & 4 & 6 & 2 & 3\\
+   1 & 4 & 2 & 1 & 4 & 2\\
+   1 & 6 & 1 & 6 & 1 & 6\\
+   1 & 2 & 4 & 1 & 2 & 4\\
+   1 & 3 & 2 & 6 & 4 & 5\\
+  \end{array} } \right]
+  = 
+   \left[ {\begin{array}{cccccc}
+   6 & 6 & 6 & 6 & 6 & 6\\
+   6 & 30 & 24 & 36 & 12 & 18\\
+   6 & 24 & 12 & 6 & 24 & 12\\
+   6 & 36 & 6 & 36 & 6 & 36\\
+   6 & 12 & 24 & 6 & 12 & 24\\
+   6 & 18 & 12 & 36 & 24 & 30\\
+  \end{array} } \right]  
+\]
+Again, in mod 7 we have, 
+ \[
+ G_n =
+   \left[ {\begin{array}{cccccc}
+   6 & 6 & 6 & 6 & 6 & 6\\
+   6 & 2 & 3 & 1 & 5 & 4\\
+   6 & 3 & 5 & 6 & 3 & 5\\
+   6 & 1 & 6 & 1 & 6 & 1\\
+   6 & 5 & 3 & 6 & 5 & 3\\
+   6 & 4 & 5 & 1 & 3 & 2\\
+  \end{array} } \right]
+  \]
+}
+\phantom{d.} ii.
+\textcolor{blue}{ 
+$$\textbf{a} = G_n \cdot \textbf{y}$$
+ \[
+ \Rightarrow \hspace{1.5cm} G_n \cdot \textbf{y} =
+   \left[ {\begin{array}{cccccc}
+   6 & 6 & 6 & 6 & 6 & 6\\
+   6 & 2 & 3 & 1 & 5 & 4\\
+   6 & 3 & 5 & 6 & 3 & 5\\
+   6 & 1 & 6 & 1 & 6 & 1\\
+   6 & 5 & 3 & 6 & 5 & 3\\
+   6 & 4 & 5 & 1 & 3 & 2\\
+  \end{array} } \right]
+  \cdot
+   \left[ {\begin{array}{c}
+   4\\
+   1\\
+   1\\
+   3\\
+   5\\
+   0\\
+  \end{array} } \right]
+   	 =
+     \left[ {\begin{array}{c}
+   84\\
+   57\\
+   65\\
+   64\\
+   75\\
+   51\\
+  \end{array} } \right]
+  \hspace{2cm}
+    \]
+In mod 7 we have,
+  \[
+\textbf{a} =
+  \left[ {\begin{array}{c}
+   0\\
+   1\\
+   2\\
+   1\\
+   5\\
+   2\\
+  \end{array} } \right]
+\]
+}
+
+\end{itemize}
+
+\begin{center}
+Sources
+\end{center}
+
+\url{https://en.wikipedia.org/wiki/Minimum_spanning_tree#Cycle_property}
+
+\end{document}

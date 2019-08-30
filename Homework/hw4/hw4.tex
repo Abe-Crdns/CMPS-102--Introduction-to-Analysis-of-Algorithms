@@ -1,0 +1,215 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage,amsthm,amsfonts,amssymb,epsfig,amsmath,times,amsthm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=cyan,
+}
+\urlstyle{same}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{claim}[theorem]{Claim}
+
+\renewcommand{\blacksquare}{\textcolor{blue}{\openbox}}
+
+\begin{document}
+
+\textcolor{blue}{\hfill Abraham Cardenas} 
+
+
+\begin{center}
+{\bf\Large CMPS 102 --- Winter 2019 --  Homework 4}
+\end{center}
+
+\begin{itemize}
+
+\item[$1.$] (10 pts)
+\item[$a.$] 
+\textcolor{blue}{
+We can choose three different roots from 3 keys. If the middle key is chosen as the root, there woud only be 1 valid BST permutation since the middle key would be a value in between the first and third key. If the first key is chosen as the root, there would be 2 valid BST permutations since we can choose either the second key or third key as the right child of the root. Similarly, if the third key is chosen as the root, there would be 2 valid BST permutations since we can choose either the first key or second key as the left child of the root. 
+}
+
+\textcolor{blue}{
+Adding each BST permutation, we can see that $B(3) = 1 + 2 + 2 = 5$.
+}
+\item[$b.$]
+\textcolor{blue}{
+If a BST had 6 nodes, namely \{1, 2, 3, 4, 5, 6\} with 3 being the root, we would have \{1, 2\} in the left subtree and \{4, 5, 6\} in the right subtree. This would mean that we can have $2!$ ways of choosing the left subtree since we can choose either 1 or 2 as a left child of the root. Similarly, we can have $3!$ ways of choosing the right subtree. However, when 5 is chosen as the right child of the root, 2 BST permutations will violate the BST property since 5 is the middle key of the right subtree.
+}
+
+\textcolor{blue}{
+Bringing these values together, we can see that there are $(2! \cdot 3!) - 2= (2 \cdot 6) - 2 = 10$ different BSTs. 
+}
+\item[$c.$]
+\textcolor{blue}{
+Since we need to choose a root from $n$ different keys, we would have $n-1$ non-root keys. Suppose we choose a key $i$ from the $n$ different keys. This would imply that there are $i-1$ keys smaller than $i$ (left subtree) and $n-i$ keys larger than $i$ (right subtree). Similarly, both the left and right subtrees are partitioned by having smaller keys on the left and bigger keys on the right.\\
+}
+
+\textcolor{blue}{
+Since we need to partition both the left and right subtrees, we need to sum over the product of each key in the left and right subtrees. This would give us the following recurrence: 
+$$\boxed{{\displaystyle T(n)={
+\begin{cases}{1},&{\text{if }} n \leq 1\\ \sum_{i=1}^{n} T(i-1) \cdot T(n-i),&{\text{otherwise}}
+\end{cases}}}}$$
+}
+\item[$d.$]
+\textcolor{blue}{
+\begin{algorithmic}[1]
+\Function{Count-BSTs}{$n$} 
+	\State $tableArr[n]$ \Comment {Declare $tableArr$ of size $n$.}
+	\State $tableArr[0] \gets 1$
+	\State $tableArr[1] \gets 1$
+	\For {$i \gets 2$ to $n$}
+		\State $tableArr[i] \gets 0$
+		\For{$j \gets 0$ to $i$}
+			\State $tableArr[i] \gets tableArr[i] + (tableArr[j] \cdot tableArr[i - j -1])$
+		\EndFor
+	\EndFor
+	\State \textbf{return} $tableArr[n]$
+\EndFunction
+\end{algorithmic}
+}
+\item[$e.$]
+\textcolor{blue}{
+Both the inner and outer for loop iterate through, at most, $n$ elements of $tableArr$. So, the algorithm would have an upper bound of $\boxed{O(n^2)}$.
+}
+
+
+\item[$2.$] (8 pts)
+	\item[a.]
+	\textcolor{blue}{
+	Since we need to choose the method with the least cost, the recurrence will be the following:  $$\boxed{{\displaystyle OPT(n)={
+\begin{cases}{0},&{\text{if }} n = 0\\ \sum_{i=1}^{n} c_i,&{\text{if }} 1 \leq n < 4\\ \text{min\{ } c_n + OPT(n - 1), \text{\hspace{2mm}} h + OPT(n-4)\text{ \}},&{\text{otherwise}} 
+\end{cases}}}}$$
+The base case, when $n = 0$, implies that we don't have any tasks to do anymore so the cost would be 0. We then have the case when we have less than 4 tasks ($n < 4$), which is given in the problem that we must do each task ourselves at cost $c_i$. And lastly, we have the case when $n \geq 4$, where we find the least cost of performing all tasks by either doing one tasks ourselves at cost $c_n$ or paying the handyman for doing four tasks at cost $h$.
+	}
+	\item[b.]
+\textcolor{blue}{
+\begin{algorithmic}[1]
+\Function{Min-Task-Cost}{$c$, $n$, $h$}
+ 	\If{$n > 0$}
+		\State $M[n] \gets [ 0 \phantom{|}...\phantom{|} n - 1] \gets -1$ \Comment {Declare $M$ array of size $n$ and init. all values to -1.}
+		\If{$n < 4$}
+			\State $M[0] \gets 0$
+			\For{$i \gets 1$ to $n-1$ }
+				\State $M[i] \gets c[i] + M[i-1]$
+			\EndFor			
+		\Else
+			\State Min-Cost-Rec($M$, $n-1$, $c$, $h$)
+		\EndIf
+		\State \textbf{return} $M[n-1]$
+	\Else 	
+		\State \textbf{return} $-1$
+	\EndIf
+\EndFunction
+\Function{Min-Cost-Rec}{$M$, $n$, $c$, $h$} 
+	\If{$n < 0$}
+		\State \textbf{return} $\infty$
+	\Else
+		\If{$M[n] = -1$} 
+		\State $M[n] \gets$ min$\{$\hspace{1mm}$c[n] +$ Min-Cost-Rec($M$, $n-1$, $c$, $h$), \\ \hspace{4.36cm} $h +$ Min-Cost-Rec($M$, $n-4$, $c$, $h$)\hspace{1mm}$\}$
+		\EndIf
+		\State \textbf{return} $M[n]$
+	\EndIf
+\EndFunction
+\end{algorithmic}
+}
+	\item[c.]
+	\textcolor{blue}{
+\begin{algorithmic}[1]
+\Function{Min-Task-Cost}{$c$, $n$, $h$} 
+	 	\If{$n > 0$}
+		\State $M[n] \gets [ 0 \phantom{|}...\phantom{|} n - 1] \gets -1$ \Comment {Declare $M$ array of size $n$ and init. all values to -1.}
+		\If{$n < 4$}
+			\State $M[0] \gets 0$
+			\For{$i \gets 1$ to $n-1$ }
+				\State $M[i] \gets c[i] + M[i-1]$
+			\EndFor			
+		\Else
+			\For{$i \gets 4$ to $n - 1$}
+				\State $M[i] \gets$ min$\{$ $c[i] + M[i-1]$, $h + M[i-4]$ $\}$
+			\EndFor
+		\EndIf
+		\State \textbf{return} $M[n-1]$
+	\Else 	
+		\State \textbf{return} $-1$
+	\EndIf
+\EndFunction
+\end{algorithmic}
+}
+	\item[d.]
+	
+	\textcolor{blue}{
+\begin{algorithmic}[1]
+\Function{Print-Whos-Task}{$M$, $c$, $n$} 
+	\For{$i \gets n-1$ downto $0$}
+		\If{$i < 4$}
+			\State \textbf{print} Do tasks $1$ to $i$
+			\State \textbf{break}
+		\ElsIf{$M[i] = c[i] + M[i - 1]$}
+			\State \textbf{print} Do task $i$
+			\State $i \gets i - 1$
+		\Else	
+			\State \textbf{print} handyman does tasks $i - 3$ to $i$
+			\State $i \gets i - 4$
+		\EndIf
+	\EndFor
+\EndFunction
+\end{algorithmic}
+}
+	
+	
+\item[$3.$] (10 pts)
+
+	\item[b.]
+	\textcolor{blue}{
+	We need to find the sum of least cost of renting a canoe from post 1 to post $k$. So, the recurrence would be as follows:
+	$$\boxed{{\displaystyle C(k)={
+\begin{cases}{0},&{\text{if }} k < 2\\ min_{1 \leq i \leq k}\{ C(i) + R_{i,k} \},&{\text{otherwise}}
+\end{cases}}}}$$
+	}
+	\item[c.]
+	\textcolor{blue}{
+	\begin{algorithmic}[1]
+\Function{Canoe-Least-Cost}{$R$, $indArr$ $n$} \Comment {$indArr$ passed by reference.}
+	\If {$n < 2$}
+		\State \textbf{return}  0
+	\EndIf
+	\State $costArr[n]$
+	\State $costArr[0] \gets 0$
+	\For {$i \gets 1$ to $n-1$}
+		\State $costArr[i] \gets \infty$ 
+		\State $indArr[i] \gets 0$
+		\For {$j \gets 0$ to $i-1$}
+			\If{$costArr[i] > costArr[j] + R[j][i]$}
+				\State $costArr[i] \gets costArr[j] + R[j][i]$
+				\State $indArr[i] \gets j$
+			\EndIf
+		\EndFor
+	\EndFor
+	\State \textbf{return} $costArr[n-1]$
+\EndFunction
+\end{algorithmic}
+	}
+	\item[d.]
+	\textcolor{blue}{
+	\begin{algorithmic}[1]
+\Function{Print-Rent-Canoe}{$indArr$, $n$} 
+	\For{$i \gets n-1$ downto $0$}
+		\State Rent from $indArr[i]$ to $i$ 
+		\State $i \gets indArr[i]$
+	\EndFor
+\EndFunction
+\end{algorithmic}
+	}\
+	
+\end{itemize}
+\begin{center}
+Sources
+\end{center}
+
+\url{https://www.geeksforgeeks.org/binary-search-tree-data-structure/}
+
+\end{document}

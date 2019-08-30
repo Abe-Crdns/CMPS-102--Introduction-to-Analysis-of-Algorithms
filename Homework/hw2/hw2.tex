@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage,amsthm,amsfonts,amssymb,epsfig,amsmath,times,amsthm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage {tikz}
+\usetikzlibrary {positioning}
+\definecolor {processblue}{cmyk}{0.96,0,0,0}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=cyan,
+}
+\urlstyle{same}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{claim}[theorem]{Claim}
+
+\renewcommand{\blacksquare}{\textcolor{blue}{\openbox}}
+
+\begin{document}
+
+\textcolor{blue}{\hfill Abraham Cardenas} 
+
+\begin{center}
+{\bf\Large CMPS 102 --- Winter 2019 --  Homework 2}
+\end{center}
+
+\renewcommand{\P}{\mbox{IH}}
+
+\begin{itemize}
+
+\item[$1.$] (10 pts)
+
+\textcolor{blue}{{\bf Given:} An array $A$ containing $n$ valid bank cards, we need to find a bank card that appears more than $\lfloor \frac{n}{2} \rfloor$ times. Also, we are restricted in only using the ``equivalent tester" as an operation. We will give this ``tester" the method name ``Equiv-test".}
+
+\textcolor{blue}{ To distinguish if our algorithm found no frauds, we will return an ``invalid bank card``. This invalid bank card is a card that's not present in our array $A$.}
+
+\textcolor{blue}{
+\begin{algorithmic}[1]
+\Function{Find-fraud}{$A$, $n$, $result$} \Comment {$result$ is passed by reference.}
+	\State $card \gets$ Find-fraud-recurse($A$, 0, $n$)
+	\If {$card$ is a valid bank card}
+		\State $result = card$
+		\State \textbf{return} true
+	\Else
+		\State \textbf{return} false
+	\EndIf
+\EndFunction
+\Function {Find-fraud-recurse}{$A$, $\ell$, $u$}
+\If {$u - \ell = 0$}
+	\State \textbf{return} an invalid bank card 
+\ElsIf {($u - \ell = 1$) \textbf{or} ($u - \ell = 2$ \textbf{and} Equiv-test($A[0]$, $A[1]$) = true)}
+	\State \textbf{return} $A[0]$
+\Else
+	\State ${m \gets \lfloor \frac{u + \ell}{2} \rfloor}$
+	\State ${cardL \gets}$ Find-fraud-recurse($A$, $\ell$, $m$)
+	\If {$cardL$ is a valid bank card}
+		\State $found \gets$ Check-card-majority($A$, $u$, $cardL$)
+		\If {$found$ = true}
+			\State \textbf{return} $cardL$
+		\EndIf
+	\EndIf
+	\State ${cardR \gets}$ Find-fraud-recurse($A$, $m+1$, $u$)
+		\If {$cardR$ is a valid bank card}
+			\State $found \gets$ Check-card-majority($A$, $u$, $cardR$)
+			\If {$found$ = true}
+				\State \textbf{return} $cardR$
+			\EndIf
+     	\EndIf
+	\State \textbf{return} an invalid bank card
+\EndIf
+\EndFunction
+\Function {Check-card-majority}{$A$, $n$, $card$}
+\State $count \gets 0$
+\State $i \gets 0$
+	\While{$i < n$}
+     	\If {Equiv-test($A[i]$, $card$) = true}
+     		\State $count \gets count + 1$
+     	\EndIf
+     	\State $i = i + 1$
+	\EndWhile
+\If {$count > \lfloor \frac{n}{2} \rfloor$}
+	\State \textbf{return} true
+\Else 
+	\State \textbf{return} false
+\EndIf
+\EndFunction
+\end{algorithmic}
+}
+\-\\
+\textcolor{blue}{{\bf Claim:} Given an array $A$ of size $n$, if the algorithm returns true, the bank card appended to $result$ will be an element in $A$ (either from the left half side or right half side) that is present more than $\lfloor \frac{n}{2} \rfloor$ times. Otherwise, if the algorithm returns false, the algorithm sets $result$ to an invalid bank card since no fraud was found in $A$.}
+
+\textcolor{blue}{ \underline{Induction Proof}:}
+
+\textcolor{blue}{{\bf Base case:} Our base case occurs when have an array $A$ of size $\leq 2$. When the array size is 0 (line 11), our algorithm returns an invalid bank card since by definition, an array of size 0 deos not contain elements and thus, contains no valid bank cards. When the array size is 1 (line 13) our algorithm returns the first element in the array. Similarly, when the array size is 2 and both elements in the array are the same (line 13), our algorithm returns the first element. In all cases, the algorithm clearly works.}
+
+\textcolor{blue}{{\bf Inductive Step:} We have to prove that the algorithm works for any array $A$ of size $\geq 3$. Let's assume the algorithm works for any array of size $k - 1$. Let us prove the algorithm works for an array of size $k$.}
+
+\textcolor{blue}{We have the following cases:}
+
+\textcolor{blue}{(1) When $u - \ell = 0$, the algorithm clearly works.}
+
+\textcolor{blue}{(2) When $u - \ell = 1$ or $u - \ell = 2$, again, the algorithm clearly works.}
+
+\textcolor{blue}{(3) When $u - \ell \geq 3$, we first recurse through the left half side of the array $A[\ell$ .... $m]$. The size of this side of the array is $n = m - \ell = \lfloor \frac{\ell + u}{2} \rfloor - \ell$. If $\ell + u$ is odd, then $n = \frac{\ell + u - 1}{2}- \ell = \frac{u-\ell-1}{2}$ which is smaller than $k=u -\ell$. Conversely, if $\ell + u$ is even, then $n=\frac{\ell + u}{2} - \ell = \frac{u-\ell}{2}$, which is smaller than $k=u-\ell$. Hence, the recursive call must be between $0$ and $k-1$, and is correct by the induction hypothesis.}
+
+\textcolor{blue}{\phantom{(3) } (a) If our recursive call on the left half side of the array returned a valid bank card $cardL$, then we loop through array $A$ by first letting $count = 0$ and $i = 0$. Our $count$ will contain the amount of times $cardL$ has appeared in $A[0$ .... $i]$. In the loop, if Equiv-test returns true at any point $i$ ($A[i] = cardL$), our $count$ increases by one. Otherwise, we increment $i$ by 1 until the loop terminates. At loop termination, $i = k-1$ which means that $count$ will contain the amount of times $cardL$ has appeared in $A[0$ .... $k - 1]$.}
+
+\textcolor{blue}{\phantom{(3) } (b) If $count > \lfloor \frac{k}{2} \rfloor$, we return $cardL$ (found a fraud). Otherwise, we continue and check the remaining right half side elements of $A$.}
+
+\textcolor{blue}{ (4) When $u - \ell \geq 3$ and when $cardL$ was not returned, we recurse through the right half side of the array $A[m+1$ .... $u]$. The size of this half is $n=u-(m+1)=u-\lfloor \frac{\ell + u}{2} \rfloor - 1$. If $\ell + u$ is even, then $n=\frac{u-\ell}{2}-1$, which is less than $k=u-\ell$. On the other hand, if $\ell + u$ is odd, then $n=u- \frac{(\ell + u - 1)}{2} -1 = \frac{u-\ell}{2} - \frac{1}{2}$, which is also less than $k=u-\ell$. Hence, the recursive call uses a smaller range of values within array $A$ and is thus, correct by our induction hypothesis.}
+
+\textcolor{blue}{\phantom{(4) } (a) If our recursive call on the right half side of the array returned a valid bank card $cardR$, we repeat the same process as (3a) but instead of using $cardL$, we use $cardR$. So, $count$ will contain the amount of times $cardR$ appears in $A[0$ .... $k - 1]$.}
+
+\textcolor{blue}{\phantom{(4) } (b) If $count > \lfloor \frac{k}{2} \rfloor$, we return $cardR$ (found a fraud).}
+
+\textcolor{blue}{(5) We have recursed through $A[\ell$ .... $m] = A[0$ .... $\lfloor \frac{u + \ell}{2} \rfloor ] = A[0$ .... $\lfloor \frac{k}{2} \rfloor]$ and $A[m+1$ .... $u] = A[\lfloor \frac{k}{2} \rfloor + 1$ .... $k-1]$. Combining both sides, we can see that we recursed through $A[0$ .... $\lfloor \frac{k}{2} \rfloor$, $\lfloor \frac{k}{2} \rfloor + 1$, .... $k-1] = A[0$ .... $k-1]$. Since we recursed through the entire array, we can conclude that no fraud exists in the array. So, we return an invalid bank card (fraud not found).}
+
+\textcolor{blue}{ From (3b) and (4b) we can conclude that the algorithm will either return a fraud that it finds on the left half side or right half side. And from (5), we can conclude that if no fraud exists in the array, the algorithm will return an invalid bank card.}
+
+\textcolor{blue}{ Therefore, since the algorithm works in all cases, we can conclude that the algorithm will work on an array $A$ of size $k$.\hspace{12.6cm}\blacksquare\\}
+
+\textcolor{blue}{ \underline{Recurrence relation}:}
+
+\textcolor{blue}{From lines 1-16, our algorithm does constant amount of work. From lines  17-48, our algorithm does recursion 2 times on an array whose size is $\frac{1}{2}$ smaller than the original array. Also, we loop through array $A$ at most, 2 times. Time taken looping twice is linear in time, so our recurrence relation is as follows: $$\boxed{T(n) = 2T(\frac{n}{2}) + \Theta(n)}$$}
+
+\textcolor{blue}{ \underline{Upper Bound}:}
+
+\textcolor{blue}{Using the master theorem we can see that the upper bound would be:}
+
+\textcolor{blue}{${ \Rightarrow \-\hspace{2.85cm} T(n) = 2T \left(\frac{n}{2}\right)+\Theta(n^1)}$  where ${a = 2}$, ${b = 2}$, and ${d = 1}$ \\ 
+\-\hspace{2cm} Since ${2 = 2^1}$,\\
+${ \Rightarrow \-\hspace{2.85cm} T(n) = \Theta(n^1 \log n) = \boxed{\Theta(n \log n)}}$\\}
+
+
+\item[$2.$] (6 pts)\-\
+
+a) \textcolor{blue}{ This statement is true because for example, Kruskal's algorithm first sorts the weighted edges in increasing order. Squaring all the weights would still result in the same set of sorted edges so the MST would not change.}
+
+b) \textcolor{blue}{ This statement is false.\\}
+
+\textcolor{blue}{ \underline{Counter-example}:}
+
+\begin {center}
+\begin {tikzpicture}[-latex ,auto ,node distance =2 cm and 1.5cm ,on grid ,
+semithick ,
+state/.style ={ circle ,top color =white , bottom color = processblue!20 ,
+draw,processblue , text=blue , minimum width =1 cm}]
+\node[state] (C)
+{$v$};
+\node[state] (A) [above left=of C] {$s$};
+\node[state] (B) [above right =of C] {$t$};
+\path (A) edge node{$4$} (B);
+\path (C) edge node{$3$} (B);
+\path (A) edge node{$2$} (C);
+\end{tikzpicture}
+\end{center}
+
+\textcolor{blue}{ The shortest path from $s$ to $t$ is the edge $(s, t)$. If we square all the weights then we will have the following graph.}
+
+\begin {center}
+\begin {tikzpicture}[-latex ,auto ,node distance =2 cm and 1.5cm ,on grid ,
+semithick ,
+state/.style ={ circle ,top color =white , bottom color = processblue!20 ,
+draw,processblue , text=blue , minimum width =1 cm}]
+\node[state] (C)
+{$v$};
+\node[state] (A) [above left=of C] {$s$};
+\node[state] (B) [above right =of C] {$t$};
+\path (A) edge node{$16$} (B);
+\path (C) edge node{$9$} (B);
+\path (A) edge node{$4$} (C);
+\end{tikzpicture}
+\end{center}
+
+\textcolor{blue}{ The shortest path from $s$ to $t$ is now the path from edge $(s, v)$ to $(v,t)$.}
+
+
+\item[$3.$] (9 pts)
+
+\textcolor{blue}{{\bf Given:} Two sequences of events $S_1$ and $S_2$, we need to find if $S_1$ is a subsequence of $S_2$. We will accomplish this by looping through each sequence until we've looped through all of $S_1$ and/or all of $S_2$.}
+
+\textcolor{blue}{
+\begin{algorithmic}[1]
+\Function{Is-Subsequence}{$S_1$, $S_2$, $m$, $n$}
+	\If {$m = 0$ \textbf{or} $n = 0$}
+		\State \textbf{return} false
+	\EndIf
+	\State $i \gets 0$
+	\State $j \gets 0$
+	\While {$j < m$ \textbf{and} $i < n$}
+		\If { $S_1[j] = S_2[i]$}
+			\State $j = j + 1$
+		\EndIf
+		\State $i = i + 1$
+	\EndWhile
+	\If { j = m}
+		\State \textbf{return} true
+	\Else
+		\State \textbf{return} false
+	\EndIf
+\EndFunction 
+\end{algorithmic}
+}
+\-\\
+\textcolor{blue}{{\bf Claim:} The algorithm either returns true or false depending if $S_1$ is a subsequence of $S_2$.}
+
+\textcolor{blue}{ \underline{Induction Proof}:}
+
+\textcolor{blue}{{\bf Base case:} The base case occurs when the size of $S_1$ is 0 or when the size of $S_2$ is 0. In both cases, it's clear that $S_1$ is not a subsequence of $S_2$ so the algorithm returns false.}
+
+\textcolor{blue}{{\bf Inductive Step:} We need to show that the algorithm works for any sequence $S_1$ of size $\geq 1$ and any sequence $S_2$ of size $\geq 1$. Let's assume the algorithm works for any sequence $S_1$ of size $\leq k_1 - 1$ and any sequence $S_2$ of size $\leq k_2 - 1$. Let's prove the algorithm works for a sequence $S_1$ of size $k_1$ and a sequence $S_2$ of size $k_2$.}
+
+\textcolor{blue}{ Before iterating, the algorithm initializes both $j$ and $i$ to 0. Both are used to index $S_1$ and $S_2$ respectively.}
+
+\textcolor{blue}{ (I.) The algorithm only increments $j$ when finding a matching event in $S_2$ (line 8). So, the subsequence $S_1[0$ .... $j-1]$ will contain the events that are matched in $S_2[0$ .... $i-1]$. Since each event happened after the next, each event will be matched in chronological order since $S_1$ and $S_2$ are indexed starting from the first event ($0^{th}$ event). During each iteration, we repeat this process and increment $i$ while doing so.}
+
+\textcolor{blue}{ From the induction hypothesis, we can assume that the loop terminates and that we have the following cases:}
+
+\textcolor{blue}{ (1) When $j = k_1$ and $i \leq k_2$, we can use (I.) to see that we looped through $S_1[0$ .... $j-1] = S_1[0$ .... $k_1-1]$ and $S_2[0$ .... $i-1]$ where $i \leq k_2$. We can conlude that because all events of $S_1$ were matched in part of or all of $S_2$, $S_1$ must be a subsequence of $S_2$ so we return true.}
+
+\textcolor{blue}{ (2) When $j < k_1$ and $i = k_2$, we can use (I.) to see that we looped through at most, $S_1[0$ .... $j-1] = S_1[0$ .... $(k_1 - 1) -1] = S_1[0$ .... $k_1-2]$ and $S_2[0$ .... $i-1] = S_2[0$ .... $k_2-1]$. We can conclude that we looped through all of $S_2$ and, at most, matched every event in $S_1$ except the last event. And because we didn't find every event of $S_1$ in $S_2$, we can conclude that $S_1$ is not a subsequence of $S_2$ so we return false.}
+
+\textcolor{blue}{ Using (1) and (2), we can conclude that the algorithm will either return true or false if $S_1$ is a subsequence of $S_2$. Therefore, since the algorithm works in all cases, we can conclude that the algorithm will work on a sequence $S_1$ of size $k_1$ and a sequence $S_2$ of size $k_2$.\hspace{5cm}\blacksquare\\}
+
+\textcolor{blue}{ \underline{Recurrence relation}:}
+
+\textcolor{blue}{ From lines 2-6 and 13-17, we only do a constant amount of work. From lines 7-12, we loop through all of $S_1$ and/or $S_2$. We can express this as the following recurrence: $$\boxed{T(m, n) = T(m - 1, n - 1) + T(m , n - 1)}$$}
+
+\textcolor{blue}{ \underline{Upper Bound}:}
+
+\textcolor{blue}{ In the worst-case, we would have to traverse through all of $S_1$ and all of $S_2$, so our upper bound would be:$$\boxed{O(n + m)}$$}
+
+\end{itemize}
+
+\begin{center}
+Sources
+\end{center}
+
+\url{https://www.geeksforgeeks.org/majority-element/}
+
+\url{https://en.wikipedia.org/wiki/Kruskal\%27s_algorithm}
+
+\end{document}
