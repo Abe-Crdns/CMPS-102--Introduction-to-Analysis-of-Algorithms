@@ -13,12 +13,9 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{claim}[theorem]{Claim}
 
-\renewcommand{\blacksquare}{\textcolor{blue}{\openbox}}
-
 \begin{document}
 
-\textcolor{blue}{\hfill Abraham Cardenas} 
-
+\hfill Abraham Cardenas
 
 \begin{center}
 {\bf\Large CMPS 102 --- Winter 2019 --  Homework 5}
@@ -28,17 +25,14 @@
 
 \item[$1.$] (10 pts)
 \item[a.] 
-\textcolor{blue}{
 Given array of words $P$ of length $n$ and $Q$ of length $m$, we need to find the length of the longest common subsequence. To find the longest subsequence, we'll need to find the max subsequence of each smaller subsequence. So, the recurrence would be given by the following:  $$\boxed{{\displaystyle T(n,m)={
 \begin{cases}{0},&{\text{if }} n = 0 \text{ or } m = 0\\ 1 + T(n-1,m-1),&{\text{if }} P_{n-1} = Q_{m-1}\\ \text{max\{ } T(n, m-1) \text{, } T(n-1, m)\text{ \}},&{\text{otherwise}} 
 \end{cases}}}}$$
 The recurrence above describes a recursive solution that computes each possible subsequence. It does this by first checking to see if $P$ and $Q$ have a length $>$ 0. If not, it returns 0 since no subsequence exists with either length being 0. If both lengths are non-zero, then it checks if the current ending words of $P$ and $Q$ are the same. If they are the same, then we add 1 to a recursive call where we reduce the size of $P$ and $Q$ by 1. If they're not the same, then we return the maximum length between 2 recursive calls. The first recursive call reduces the size of $Q$ by 1 and leaves $P$ the same. Conversely, the second call reduces the size of $P$ by 1 and leaves $Q$ the same.
-}
+
 \item[b.]
-\textcolor{blue}{
 To implement a bottom-up algorithm, we must loop through both $P$ and $Q$. We'll define a table of numbers which will use $O(n \cdot m)$ extra space.
-}
-\textcolor{blue}{
+
 \begin{algorithmic}[1]
 \Function{Longest-Subsequence-Length}{$P$, $Q$, $n$, $m$}  
 	\State $table[n][m]$	
@@ -60,16 +54,13 @@ To implement a bottom-up algorithm, we must loop through both $P$ and $Q$. We'll
 	\State \textbf{return} $table[n][m]$
 \EndFunction
 \end{algorithmic}
-}
+
 \item[c.]
-\textcolor{blue}{
 Since the inner loop and outer loop loops through all of $P$ and $Q$ respectively, the algorithm would have an upper bound of $\boxed{O(n \cdot m)}$.
-}
+
 \item[d.]
-\textcolor{blue}{
 To ``traceback'' our result so we can get the actual words instead of the length of the longest common subsequence, we need to traverse $table$ from part b. 
-}
-\textcolor{blue}{
+
 \begin{algorithmic}[1]
 \Function{Trace-Back}{$table$, $P$, $Q$, $n$, $m$} 
 	\State $trace[n+m]$  \Comment {Declare $trace$ of size $n+m$.}
@@ -99,29 +90,21 @@ To ``traceback'' our result so we can get the actual words instead of the length
 	\State return $trace[k \hspace{1mm} ... \hspace{1mm} ((n+m)-1)]$
 \EndFunction
 \end{algorithmic}
-}
 
-\textcolor{blue}{
 Since we traversed through the all values in $P$ and/or $Q$ and swapped all of $trace$, our running time will be $O(2 \cdot (n + m)) = \boxed{O(n + m)}$. [Could use a stack to avoid swapping at the end]
-}
 
 \item[a.] 
-\textcolor{blue}{
 Given an array $d$ of size $n$, we need to find the minimum number of operations that is needed to multiply the sets of matrices in $d[0$ .... $n-1]$. We can derive a simple recursive solution to this problem by using the following recurrence:
 $$\boxed{{\displaystyle T(i,j)_{1\leq (i\text{, }j) \leq n}={
 \begin{cases}{0},&{\text{if }} i = j\\ \text{min}_{i \leq k < j} \big(T(i, k) + T(k+1, j) + d_{i-1} * d_k * d_j \big),&{\text{otherwise}} 
 \end{cases}}}}$$
-}
-\item[b.]
-\textcolor{blue}{
-	The subproblems in the recursive solution in part a computes all possible permutations of parenthesis.  It does this by checking which permutation contains the minimum amount of $d_{i-1} * d_k * d_j$ operations. This recursive solution is not optimal since we have some repeating subproblems in our recursion calls.
-}
-\item[c.]
-\textcolor{blue}{
-	To implement a bottom-up algorithm, we'll need to use an $n \cdot n$ table that keeps track of previous calculated amount of operations. The total amount of extra space that we'll use is $O(n^2)$.
-}
 
-\textcolor{blue}{
+\item[b.]
+	The subproblems in the recursive solution in part a computes all possible permutations of parenthesis.  It does this by checking which permutation contains the minimum amount of $d_{i-1} * d_k * d_j$ operations. This recursive solution is not optimal since we have some repeating subproblems in our recursion calls.
+
+\item[c.]
+	To implement a bottom-up algorithm, we'll need to use an $n \cdot n$ table that keeps track of previous calculated amount of operations. The total amount of extra space that we'll use is $O(n^2)$.
+
 \begin{algorithmic}[1]
 \Function{Min-Matrix-Mult}{$d$, $n$} 
 	\State $table[n][n]$
@@ -143,14 +126,11 @@ $$\boxed{{\displaystyle T(i,j)_{1\leq (i\text{, }j) \leq n}={
 	\State \textbf{return} $table[1][n-1]$
 \EndFunction
 \end{algorithmic}
-}
-\textcolor{blue}{
+
 	Since we have 3 nested loops where each loop iterates at most $n$ times, our upper bound would be $\boxed{O(n^3)}$.
-}
+
 \item[d.]
-\textcolor{blue}{
 	To find the ``last'' multiplication, all we need to do is check the left and the bottom cells of $table[1][n-1]$ (where we got the minimum on line 18 in part c). These cells are $table[1][n-2]$ and $table[2][n-1]$ respectively. We then check which cells hold the smaller value, and we use that cell to determine which multiplication happened last. This can either be $d[1$ ... $n-2] * d[n-1]$ or $d[1] * d[2$ .... $n-1]$.
-}
 
 \end{itemize}
 \end{document}

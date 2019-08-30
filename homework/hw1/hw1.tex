@@ -7,11 +7,9 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{claim}[theorem]{Claim}
 
-\renewcommand{\blacksquare}{\textcolor{blue}{\openbox}}
-
 \begin{document}
 
-\textcolor{blue}{\hfill Abraham Cardenas} 
+\hfill Abraham Cardenas
 
 \begin{center}
 {\bf\Large CMPS 102 --- Winter 2019 --  Homework 1 \normalsize revised 1/12}
@@ -54,57 +52,55 @@ Four problems, 36 points, due Wednesday Jan. 23rd, see the \emph{Homework Guidel
 \EndFunction
 \end{algorithmic}
 
-\textcolor{blue}{ {\bf Claim:} The algorithm correctly sorts the numbers in an array $A$ of size $n$ (in ascending order).}
+{\bf Claim:} The algorithm correctly sorts the numbers in an array $A$ of size $n$ (in ascending order).
 
-\textcolor{blue}{ \underline{Induction Proof}:}
+\underline{Induction Proof}:
 
-\textcolor{blue}{ {\bf Base Case:} First, our base case occurs when we have an array $A$ of size $\leq$ 1 or size $= 2$ (handled in the algorithm on lines 5-6 and 7-12 respectively). The first base case is handled by simply returning because by definition, an array of size $\leq$ 1 is already sorted. The second base case is handled by swapping $A[u]$ and $A[\ell]$ if $A[u] < A[\ell]$. As a result of this swapping, the algorithm sorts all values in ascending order. So therefore, in both cases, the algorithm works.}
+{\bf Base Case:} First, our base case occurs when we have an array $A$ of size $\leq$ 1 or size $= 2$ (handled in the algorithm on lines 5-6 and 7-12 respectively). The first base case is handled by simply returning because by definition, an array of size $\leq$ 1 is already sorted. The second base case is handled by swapping $A[u]$ and $A[\ell]$ if $A[u] < A[\ell]$. As a result of this swapping, the algorithm sorts all values in ascending order. So therefore, in both cases, the algorithm works.
 
-\textcolor{blue}{ {\bf Inductive Step:} We need to show that the algorithm works for an array $A$ of size $\geq$ 3. Let's assume that the algorithm works for any array $A$ of size $\leq n-1$. Let us prove that the algorithm works for an array $A$ of size $n$.}
+{\bf Inductive Step:} We need to show that the algorithm works for an array $A$ of size $\geq$ 3. Let's assume that the algorithm works for any array $A$ of size $\leq n-1$. Let us prove that the algorithm works for an array $A$ of size $n$.
 
-\textcolor{blue}{ After line 16 is executed, $A[\ell$ .... $(\ell + twothirds - 1)]$ is sorted. This implies that}
+After line 16 is executed, $A[\ell$ .... $(\ell + twothirds - 1)]$ is sorted. This implies that
 
-\textcolor{blue}{ (1) $A[(u - twothirds + 1)$ .... $(\ell + twothirds - 1)] \geq A[\ell$ .... $(u - twothirds)]$}
+(1) $A[(u - twothirds + 1)$ .... $(\ell + twothirds - 1)] \geq A[\ell$ .... $(u - twothirds)]$
 
-\textcolor{blue}{ (2) $A[(u - twothirds + 1)$ .... $u]$ has at least $u - \ell - (2*twothirds) + 1$ number of elements in where each is no smaller than every element in $A[\ell$ .... $(u - twothirds)]$.}
+(2) $A[(u - twothirds + 1)$ .... $u]$ has at least $u - \ell - (2*twothirds) + 1$ number of elements in where each is no smaller than every element in $A[\ell$ .... $(u - twothirds)]$.
 
-\textcolor{blue}{ After line 17 is executed, $A[(u - twothirds + 1)$ .... $u]$ is sorted. This implies}
+After line 17 is executed, $A[(u - twothirds + 1)$ .... $u]$ is sorted. This implies
 
-\textcolor{blue}{ (3) $A[(\ell + twothirds)$ .... $u]$ is sorted, and that}
+(3) $A[(\ell + twothirds)$ .... $u]$ is sorted, and that
 
-\textcolor{blue}{ (4) $A[(\ell + twothirds)$ .... $u] \geq A[(u - twothirds + 1)$ .... $(\ell + twothirds - 1)]$}
+(4) $A[(\ell + twothirds)$ .... $u] \geq A[(u - twothirds + 1)$ .... $(\ell + twothirds - 1)]$
 
-\textcolor{blue}{ Using (2) and the fact that the size of $A[(\ell + twothirds)$ .... $u] \leq u - \ell - (2*twothirds) + 1$, we can conclude that}
+Using (2) and the fact that the size of $A[(\ell + twothirds)$ .... $u] \leq u - \ell - (2*twothirds) + 1$, we can conclude that
 
-\textcolor{blue}{ (5) $A[(\ell + twothirds)$ .... $u] \geq A[\ell$ .... $(u - twothirds)]$} 
+(5) $A[(\ell + twothirds)$ .... $u] \geq A[\ell$ .... $(u - twothirds)]$
 
-\textcolor{blue}{ Using (4) and (5), we can conclude that}
+Using (4) and (5), we can conclude that
 
-\textcolor{blue}{ (6) $A[(\ell + twothirds)$ .... $u] \geq A[\ell$ .... $(\ell + twothirds - 1)]$}
+(6) $A[(\ell + twothirds)$ .... $u] \geq A[\ell$ .... $(\ell + twothirds - 1)]$
 
-\textcolor{blue}{ After line 18 is executed, $A[\ell$ .... $(\ell + twothirds - 1)]$ is sorted. Using (3) and (6), we can conclude that $A[\ell$ .... $u]$ is sorted. And since the algorithm lets $\ell = 0$ and $u = n - 1$, we can see that $A[0$ .... $n - 1]$ is sorted and has size $n$.}\-\hspace{12cm}\blacksquare\\
+After line 18 is executed, $A[\ell$ .... $(\ell + twothirds - 1)]$ is sorted. Using (3) and (6), we can conclude that $A[\ell$ .... $u]$ is sorted. And since the algorithm lets $\ell = 0$ and $u = n - 1$, we can see that $A[0$ .... $n - 1]$ is sorted and has size $n$.\-\hspace{12cm}\qed\\
 \- \\
-\textcolor{blue}{ \underline{Recurrence relation}:}
+\underline{Recurrence relation}:
 
-\textcolor{blue}{ From lines 9-12, our algorithm performs comparisons which only take a constant amount of time. From lines 14-18, our algorithm performs recursion 3 times, where each time, the array is $\frac{2}{3}$ the size of the original array. We can express this as the recurrence:}
-\textcolor{blue}{\begin{center}\boxed{$$T(n) = 3T(\frac{2}{3}n)+\Theta(1)$$}\end{center}}
+From lines 9-12, our algorithm performs comparisons which only take a constant amount of time. From lines 14-18, our algorithm performs recursion 3 times, where each time, the array is $\frac{2}{3}$ the size of the original array. We can express this as the recurrence:
+\begin{center}\boxed{$$T(n) = 3T(\frac{2}{3}n)+\Theta(1)$$}\end{center}
 
-\textcolor{blue}{ \underline{Upper bound}:}
+\underline{Upper bound}:
 
-\textcolor{blue}{ We will use the master theorem to find a good upper bound for our algorithm.}
+We will use the master theorem to find a good upper bound for our algorithm.
 
-\textcolor{blue}{Recall:\\ \-\hspace{2cm} If\begin{center} ${T(n) = aT(\frac{n}{b}) + \Theta(n^d)}$ where ${a > 0}$, ${b > 1}$, and ${d \geq 0}$\\
+Recall:\\ \-\hspace{2cm} If\begin{center} ${T(n) = aT(\frac{n}{b}) + \Theta(n^d)}$ where ${a > 0}$, ${b > 1}$, and ${d \geq 0}$\\
 \end{center} \-\hspace{2cm}
-then\[ T(n) =\begin{cases} \Theta(n^d)&\text{if $ $$d > \log_b a$$ $}\\ \Theta(n^d \log n)&\text{if $ $$d = \log_b a$$ $}\\ \Theta(n^{\log_b a})&\text{if $ $$d < \log_b a$$ $}\end{cases}\]}\\
-\textcolor{blue}{
+then\[ T(n) =\begin{cases} \Theta(n^d)&\text{if $ $$d > \log_b a$$ $}\\ \Theta(n^d \log n)&\text{if $ $$d = \log_b a$$ $}\\ \Theta(n^{\log_b a})&\text{if $ $$d < \log_b a$$ $}\end{cases}\]\\
 ${ \Rightarrow \-\hspace{2.85cm} T(n) = 3T(\frac{2}{3}n)+\Theta(1)}$ \\ ${ \-\hspace{4.28cm}= 3T \left(\frac{n}{\frac{3}{2}}\right)+\Theta(n^0)}$  where ${a = 3}$, ${b = \frac{3}{2}}$, and ${d = 0}$ \\ 
 \-\hspace{2cm} Since ${0 < \log_\frac{3}{2} 3}$,\\
 ${ \Rightarrow \-\hspace{2.85cm} T(n) = \Theta(n^{\log_\frac{3}{2} 3}) \approx \boxed{\Theta(n^{2.71})}}$
-}
 
 \item Induction Proof correctness (10 pts)\\
 \- \\
-\textcolor{blue}{\underline{Claim 2 counter-example:}}
+\underline{Claim 2 counter-example:}
 
 \tikzset{every tree node/.style={minimum width=0.3em,draw,circle},
          blank/.style={draw=none},
@@ -112,7 +108,7 @@ ${ \Rightarrow \-\hspace{2.85cm} T(n) = \Theta(n^{\log_\frac{3}{2} 3}) \approx \
          {draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}},
          level distance=1cm}
 
-\textcolor{blue}{ Suppose we had the following full binary tree. (I = internal node and L = leaf node)
+Suppose we had the following full binary tree. (I = internal node and L = leaf node)
 \begin{center}
 \begin{tikzpicture}
 \Tree
@@ -129,50 +125,46 @@ ${ \Rightarrow \-\hspace{2.85cm} T(n) = \Theta(n^{\log_\frac{3}{2} 3}) \approx \
 ]
 \end{tikzpicture}
 \end{center}
-This full binary tree contains 3 internal nodes and 4 leaf nodes. According to the claim, the height of the full binary tree is 3 - 1 = 2. But that's incorrect, since the height is 3. Hence, the claim is false.}
+This full binary tree contains 3 internal nodes and 4 leaf nodes. According to the claim, the height of the full binary tree is 3 - 1 = 2. But that's incorrect, since the height is 3. Hence, the claim is false.
 
-\textcolor{blue}{\underline{Proof flaw for Claim 2:}\\
-The flaw in the proof for Claim 2 is that it only considers full binary trees that have two children leaves. This doesn't cover all cases for all full binary trees.}
+\underline{Proof flaw for Claim 2:}\\
+The flaw in the proof for Claim 2 is that it only considers full binary trees that have two children leaves. This doesn't cover all cases for all full binary trees.
 
-\textcolor{blue}{\underline{Proof flaw for Claim 1:}\\
+\underline{Proof flaw for Claim 1:}\\
 The proof for Claim 1 does have a flaw. Like the flaw in the proof for Claim 2, the proof for Claim 1 doesn't cover all cases for all full binary trees. 
-}
 
 \item Asymptotic notation (6 pts)\\
 \- \\
-\textcolor{blue}{Recall: \[ \lim_{x\to\infty} \frac{f(x)}{g(x)} = L \text{  }\begin{cases} \text{if } 0 \leq L < \infty \text{ then}&f(x) \in O(g(x))\\ \text{if } 0<L<\infty \text{ then}&f(x) \in \Theta(g(x))\\ \text{if } 0<L\leq \infty \text{ then}&f(x) \in \Omega(g(x))\end{cases}\]\\}
-a) \textcolor{blue}{\underline{Counter-example:}\\
+Recall: \[ \lim_{x\to\infty} \frac{f(x)}{g(x)} = L \text{  }\begin{cases} \text{if } 0 \leq L < \infty \text{ then}&f(x) \in O(g(x))\\ \text{if } 0<L<\infty \text{ then}&f(x) \in \Theta(g(x))\\ \text{if } 0<L\leq \infty \text{ then}&f(x) \in \Omega(g(x))\end{cases}\]\\
+a) \underline{Counter-example:}\\
 \- \\
 \phantom{b) } Suppose ${f(n) = \frac{1}{n}}$ and ${g(n) = \frac{1}{n} + 1}$,\\
 \- \\
 \phantom{b) } ${\Rightarrow}$ $$\lim_{n\to\infty} \frac{\log_2{(\frac{1}{n})}}{\log_2{(\frac{1}{n} + 1)}} = \lim_{n\to\infty} \frac{\frac{\ln (n^{-1})}{\ln 2}}{\frac{\ln (n^{-1} + 1)}{\ln 2}}$$  $$= \lim_{n\to\infty} \frac{-\ln n}{\ln (1+\frac{1}{n})} = \frac{-\infty}{0} = -\infty$$\\
 \phantom{b) } Hence, $$\log_2{(n^{-1})} \not\in O(\log_2{(n^{-1} + 1)})$$\\
-}
-b) \textcolor{blue}{\underline{Counter-example:}\\
+
+b) \underline{Counter-example:}\\
 \- \\
 \phantom{b) } Suppose ${f(n) = \log_2{(\frac{1}{n}+1)}}$ and ${g(n) =\log_2{(\frac{1}{n})}}$,\\
 \- \\
 \phantom{b) } ${\Rightarrow}$ $$\lim_{n\to\infty} \frac{2^{(\log_2{(\frac{1}{n}+1)})}}{2^{(\log_2{(\frac{1}{n})})}} =\lim_{n\to\infty}  \frac{\frac{1}{n}+1}{\frac{1}{n}} = \lim_{n\to\infty} n+1 = \infty$$\\
 \phantom{b) } Hence, $$2^{(\log_2{(\frac{1}{n}+1)})} \not\in O(2^{(\log_2{(\frac{1}{n})})})$$\\
-}
-c) \textcolor{blue}{\underline{Proof:}\\
+
+c) \underline{Proof:}\\
 \-\hspace{1.5cm}Suppose there exists ${N \in \mathbb{N}}$ and ${c \in \mathbb{R} > 0}$ such that ${\forall n \in \mathbb{N}}$ with ${n \geq N}$ then, $$0 \leq f(n) \leq cg(n)$$ 
 \-\hspace{1.5cm}${\Rightarrow \-\hspace{3.95cm} 0^2 \leq f(n)^2 \leq (cg(n))^2}$\\
 \- \\
 ${\-\hspace{6.1cm} 0 \leq f(n)^2 \leq c^2g(n)^2}$\\
 \- \\
-\-\hspace{1.5cm} Therefore, ${f(n)^2 \in O(g(n)^2)}$\-\hspace{9cm}\blacksquare
-}
+\-\hspace{1.5cm} Therefore, ${f(n)^2 \in O(g(n)^2)}$\-\hspace{9cm}\qed
+
 \item Submarine Hiding (10 pts)
 
-\textcolor{blue}{ {\bf Given:} An array $A$ of size $n$ where $A[0] = 0$, $A[n - 1] = 0$ and all elements in $A[1$ .... $n-2]$ are positive integers, we need to find a number at some index $m$ in $A$ such that $A[m - 1] \leq A[m]$ and $A[m + 1] \leq A[m]$.
-}
+{\bf Given:} An array $A$ of size $n$ where $A[0] = 0$, $A[n - 1] = 0$ and all elements in $A[1$ .... $n-2]$ are positive integers, we need to find a number at some index $m$ in $A$ such that $A[m - 1] \leq A[m]$ and $A[m + 1] \leq A[m]$.
 
-a)
-\textcolor{blue}{ To accomplish $O(\log n)$, we will use a variation of the binary search algorithm to look at half of the array. 
-}
+a) To accomplish $O(\log n)$, we will use a variation of the binary search algorithm to look at half of the array. 
 \- \\
-\textcolor{blue}{
+
 \begin{algorithmic}[1]
 \Function{find-valley}{$A$, $n$} 
 	\State Find-Valley-Rec($A$, 0, $n-1$)
@@ -189,47 +181,43 @@ a)
 \EndIf 
 \EndFunction
 \end{algorithmic}
-}
+
 \- \\
-\textcolor{blue}{{\bf Claim:} Given an array $A$ of size $n$, the algorithm always returns an index $m$ such that $A[m - 1] \leq A[m]$ and $A[m + 1] \leq A[m]$.}
+{\bf Claim:} Given an array $A$ of size $n$, the algorithm always returns an index $m$ such that $A[m - 1] \leq A[m]$ and $A[m + 1] \leq A[m]$.
 
-\textcolor{blue}{ \underline{Induction Proof}:}
+\underline{Induction Proof}:
 
-\textcolor{blue}{{\bf Base case:} Given that the problem states that the array must hold the depth of both ports and have some distance in between the ports, our base case occurs when we have an array $A$ of size 3. In this case, $A[0] = 0$, $A[1] =$ some positive integer and $A[2] = 0$. Clearly the algorithm works since it will return index 1.}
+{\bf Base case:} Given that the problem states that the array must hold the depth of both ports and have some distance in between the ports, our base case occurs when we have an array $A$ of size 3. In this case, $A[0] = 0$, $A[1] =$ some positive integer and $A[2] = 0$. Clearly the algorithm works since it will return index 1.
 
-\textcolor{blue}{{\bf Inductive Step:} We need to show the algorithm works for any array $A$ of size $> 3$. Let's assume the algorithm works for any array $A$ of size $\leq k-1$. Let us prove that the algorithm works for an array $A$ of size $k$.}
+{\bf Inductive Step:} We need to show the algorithm works for any array $A$ of size $> 3$. Let's assume the algorithm works for any array $A$ of size $\leq k-1$. Let us prove that the algorithm works for an array $A$ of size $k$.
 
-\textcolor{blue}{
 We have three cases:\\
-(1) When $A[mid-1] \leq A[mid]$ and $A[mid+1] \leq A[mid]$, the algorithm clearly works.}
+(1) When $A[mid-1] \leq A[mid]$ and $A[mid+1] \leq A[mid]$, the algorithm clearly works.
 
-\textcolor{blue}{
-(2) When $mid > 0$ and $A[mid-1] > A[mid]$, we recurse through half of the array. Namely the left half side of the array $A[\ell$ .... $m-1]$. The size of the array of this half is $n = mid - \ell - 1 = \lfloor (\ell + u)/2 \rfloor - \ell - 1$. If $\ell + u$ is odd, then $n = (\ell + u - 1)/2 - \ell - 1 = (u - \ell)/2 -1$ which is smaller than $k=u -\ell$. Conversely, if $\ell + u$ is even, then $n=(\ell + u)/2 - \ell -1 = (u-\ell)/2$, which is smaller than $k=u-\ell$. Hence, the recursive call must be between $0$ and $k-1$, and is correct by the induction hypothesis.}
+(2) When $mid > 0$ and $A[mid-1] > A[mid]$, we recurse through half of the array. Namely the left half side of the array $A[\ell$ .... $m-1]$. The size of the array of this half is $n = mid - \ell - 1 = \lfloor (\ell + u)/2 \rfloor - \ell - 1$. If $\ell + u$ is odd, then $n = (\ell + u - 1)/2 - \ell - 1 = (u - \ell)/2 -1$ which is smaller than $k=u -\ell$. Conversely, if $\ell + u$ is even, then $n=(\ell + u)/2 - \ell -1 = (u-\ell)/2$, which is smaller than $k=u-\ell$. Hence, the recursive call must be between $0$ and $k-1$, and is correct by the induction hypothesis.
 
-\textcolor{blue}{
-(3) When $A[mid-1] \leq A[mid]$ or $mid \leq 0$, we recurse through the right half of the array $A[m+1$ .... $u]$. The size of this half is $n=u-(m+1)-1=u-\lfloor (\ell + u)/2 \rfloor - 1$. If $\ell + u$ is even, then $n=(u-\ell)/2-1$, which is less than $k=u-\ell$. On the other hand, if $\ell + u$ is odd, then $n=u-(\ell + u - 1)/2 -1=(u-\ell)/2 - 1/2$, which is also less than $k=u-\ell$. Hence, the recursive call uses a smaller range of values within array $A$ and is thus, correct by our induction hypothesis.}
+(3) When $A[mid-1] \leq A[mid]$ or $mid \leq 0$, we recurse through the right half of the array $A[m+1$ .... $u]$. The size of this half is $n=u-(m+1)-1=u-\lfloor (\ell + u)/2 \rfloor - 1$. If $\ell + u$ is even, then $n=(u-\ell)/2-1$, which is less than $k=u-\ell$. On the other hand, if $\ell + u$ is odd, then $n=u-(\ell + u - 1)/2 -1=(u-\ell)/2 - 1/2$, which is also less than $k=u-\ell$. Hence, the recursive call uses a smaller range of values within array $A$ and is thus, correct by our induction hypothesis.
 
-\textcolor{blue}{Therefore, since each case is correct, we can conclude that the algorithm will work on an array $A$ of size $k$.}
-\-\hspace{14.16cm}\blacksquare\\ 
+Therefore, since each case is correct, we can conclude that the algorithm will work on an array $A$ of size $k$.
+\-\hspace{14.16cm}\qed\\ 
 \- \
 
-\textcolor{blue}{ \underline{Recurrence relation}:}
+\underline{Recurrence relation}:
 
-\textcolor{blue}{ From lines 6-8, the algorithm does a constant amount of work. Then, from lines 9-13, the algorithm does recursion 1 time on an array that's $\frac{1}{2}$ smaller than the original array. This can be expressed as the following recurrence:}
-\textcolor{blue}{\begin{center}\boxed{$$T(n) = T(\frac{n}{2})+\Theta(1)$$}\end{center}}
+From lines 6-8, the algorithm does a constant amount of work. Then, from lines 9-13, the algorithm does recursion 1 time on an array that's $\frac{1}{2}$ smaller than the original array. This can be expressed as the following recurrence:
+\begin{center}\boxed{$$T(n) = T(\frac{n}{2})+\Theta(1)$$}\end{center}
 
-\textcolor{blue}{ \underline{Upper Bound}:}
+\underline{Upper Bound}:
 
-\textcolor{blue}{ Finding a good upper bound for this recurrence is fairly straight forward if we use the master theorem.}
+Finding a good upper bound for this recurrence is fairly straight forward if we use the master theorem.
 
-\textcolor{blue}{
 ${ \Rightarrow \-\hspace{2.85cm} T(n) = T \left(\frac{n}{2}\right)+\Theta(n^0)}$  where ${a = 1}$, ${b = 2}$, and ${d = 0}$ \\ 
 \-\hspace{2cm} Since ${0 = \log_2 1}$,\\
 ${ \Rightarrow \-\hspace{2.85cm} T(n) = \Theta(n^0 \log n) = \boxed{\Theta(\log n)}}$\\
-}
+
 \- \\
 b)
-\textcolor{blue}{ If the submarine started from the beginning (at the first port), then in the worst-case, there will be a sea valley at the last possible location. That is, the location just before getting to the second port ($A[n-2]$). Since we'd have to traverse through all possible locations between the ports, our upper bound would be linear in time. So the upper bound would be \boxed{$$O(n)$$}.}
+If the submarine started from the beginning (at the first port), then in the worst-case, there will be a sea valley at the last possible location. That is, the location just before getting to the second port ($A[n-2]$). Since we'd have to traverse through all possible locations between the ports, our upper bound would be linear in time. So the upper bound would be \boxed{$$O(n)$$}.
 
 \end{enumerate}
 \end{document}

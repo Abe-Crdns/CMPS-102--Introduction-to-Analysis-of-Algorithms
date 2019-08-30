@@ -13,11 +13,9 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{claim}[theorem]{Claim}
 
-\renewcommand{\blacksquare}{\textcolor{blue}{\openbox}}
-
 \begin{document}
 
-\textcolor{blue}{\hfill Abraham Cardenas} 
+\hfill Abraham Cardenas
 
 
 \begin{center}
@@ -32,7 +30,6 @@
 
 a.
 
-\textcolor{blue}{ 
 \underline{Proof by contradiction}:\\
 Suppose we had the minimum spanning tree $T$ with the set of edge weights $w_1, w_2,$ .... $w_n$.  Suppose $T$ was not a minimum-altitude connected subgraph. There should be a pair of nodes $u$ and $v$, and two $u$ to $v$ paths $P_1 \neq P_2$, such that $P_1$ is the path from $u$ to $v$ but $P_2$ has the smaller altitude. Then, there exists some edge $e = (u',v')$ on $P_1$ that contains the maximum altitude over all edges in $P_1$ and $P_2$.\\ 
 Now, let's consider the set of edges in $P_1$ and $P_2$ except $e$, and suppose we took the following path from $u'$-$v'$:
@@ -41,17 +38,14 @@ Now, let's consider the set of edges in $P_1$ and $P_2$ except $e$, and suppose 
   \item $P_2$ from $u$ to $v$
   \item $P_1$ from $v$ to $v'$
 \end{enumerate}
-It's possible that this path from $u'$-$v'$ contains a cycle so then, the set of edges in $P_1$ and $P_2$ except $e$ must contain some simple path $S$. And because $e$ is the maximum altitude in $T$, this would imply that the edges in $S$ and $e$ would also form a cycle. This contradicts the Cycle Property which says that ``for any cycle C in the graph, if the weight of an edge e of C is larger than the individual weights of all other edges of C, then this edge cannot belong to an MST''. Therefore, we can conclude that $T$ must be a minimum-altitude connected subgraph.\hspace{7.5cm}\blacksquare
-}
+It's possible that this path from $u'$-$v'$ contains a cycle so then, the set of edges in $P_1$ and $P_2$ except $e$ must contain some simple path $S$. And because $e$ is the maximum altitude in $T$, this would imply that the edges in $S$ and $e$ would also form a cycle. This contradicts the Cycle Property which says that ``for any cycle C in the graph, if the weight of an edge e of C is larger than the individual weights of all other edges of C, then this edge cannot belong to an MST''. Therefore, we can conclude that $T$ must be a minimum-altitude connected subgraph.\hspace{7.5cm}\qed
 
 
 \item[$2.$] (6 pts)\\
 a.\\
-\textcolor{blue}{ 
 If we choose $\omega = 3$, then we have $$\Rightarrow \big\{ \omega^0, \omega^1, \omega^2, \omega^3, \omega^4, \omega^5  \big\} = \big\{ 3^0,  3^1, 3^2, 3^3, 3^4, 3^5  \big\}$$ $$\Rightarrow \big\{ 1, 3, 9, 27, 81, 243  \big\}$$ In mod 7 we have, $$= \big\{ 1, 3, 2, 6, 4, 5  \big\}$$
-}
+
 b.\\
-\textcolor{blue}{ 
  \[
    F=
   \left[ {\begin{array}{cccccc}
@@ -63,9 +57,8 @@ b.\\
    1 & 5 & 4 & 6 & 2 & 3\\
   \end{array} } \right]
 \]
-}
+
 c.\\
-\textcolor{blue}{ 
 $$\textbf{y} = F \cdot \textbf{a}$$
  \[
    \Rightarrow \hspace{1.5cm} \textbf{y} =
@@ -108,10 +101,9 @@ In mod 7 we have,
    0\\
   \end{array} } \right]
 \]
-}
+
 d.\\
 \phantom{d.} i.
-\textcolor{blue}{ 
  \[
    G_n = \frac{1}{6} \cdot
   \left[ {\begin{array}{cccccc}
@@ -168,9 +160,7 @@ Again, in mod 7 we have,
    6 & 4 & 5 & 1 & 3 & 2\\
   \end{array} } \right]
   \]
-}
 \phantom{d.} ii.
-\textcolor{blue}{ 
 $$\textbf{a} = G_n \cdot \textbf{y}$$
  \[
  \Rightarrow \hspace{1.5cm} G_n \cdot \textbf{y} =
@@ -214,7 +204,6 @@ In mod 7 we have,
    2\\
   \end{array} } \right]
 \]
-}
 
 \end{itemize}
 
